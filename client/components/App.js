@@ -1,14 +1,23 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Greetings from './Greetings';
+import SignupPage from './signup/SignupPage';
 import NavigationBar from './NavigationBar';
+import LoginPage from './login/LoginPage';
 
 class App extends React.Component {
 
     render (){
         return (
-            <div className="container">
-                <h1>app component</h1>
-            </div>
-        );
+            <Router>
+                <div>
+                <NavigationBar />
+                  <Route exact path="/" component={Greetings} />
+                  <Route path="/signup" component={SignupPage} />
+                  <Route path="/login" component={LoginPage} />
+                </div>
+            </Router> );
     }
     
 }
