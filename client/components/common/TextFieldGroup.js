@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-const TextFieldGroup = ({ field, value, label, error, type, onChange}) =>{
+const TextFieldGroup = ({ field, value, label, error, type, onChange, checkUserExists}) =>{
     return (
         <div className="form-group" >
                 <label className="control-label">{label}</label>
                <input 
+                onBlur={checkUserExists}
                 value={value}
                 onChange={onChange}
                 type={type}
@@ -24,6 +25,7 @@ TextFieldGroup.propTypes = {
     error: PropTypes.string,
     type: PropTypes.string,
     onChange: PropTypes.func.isRequired,
+    checkUserExists: PropTypes.func
 }
 
 TextFieldGroup.defaulProps = {
