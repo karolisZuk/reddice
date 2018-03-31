@@ -5,6 +5,7 @@ import Greetings from './Greetings';
 import SignupPage from './signup/SignupPage';
 import NavigationBar from './NavigationBar';
 import LoginPage from './login/LoginPage';
+import FlashMessagesList from './flash/FlashMessagesList';
 
 class App extends React.Component {
     render (){
@@ -12,6 +13,7 @@ class App extends React.Component {
             <Router>
                 <div>
                 <NavigationBar />
+                <FlashMessagesList />
                   <Route exact path="/" component={Greetings} />
                   <Route path="/signup" component={SignupPage} />
                   <Route path="/login" component={LoginPage} />
