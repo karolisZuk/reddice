@@ -2,6 +2,7 @@ import React from 'react';
 import timezones from '../../data/timezones';
 import map from 'lodash/map';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
 class SignupForm extends React.Component {
     constructor(props){
@@ -11,7 +12,9 @@ class SignupForm extends React.Component {
             email:'',
             password:'',
             passwordConfirmation:'',
-            timezone:''
+            timezone:'',
+            errors:{},
+            isLoading:false
         }
         this.onChange=this.onChange.bind(this);
         this.onSubmit=this.onSubmit.bind(this);
@@ -22,25 +25,33 @@ class SignupForm extends React.Component {
     }
 
     onSubmit(e){
+        this.setState({ errors:{},isLoading:true });
         e.preventDefault();
-        this.props.userSignupRequest(this.state);
+        this.props.userSignupRequest(this.state).then(
+            ()=>{
+
+            },
+            (err) => this.setState({ errors: err.response.data, isLoading:false })
+        );
     }
 
     render(){
+        const { errors } = this.state;
         const options = map(timezones,(val, key)=>
             <option key={val} value={val}>{key}</option>);
     return (
         <form onSubmit={this.onSubmit} >
             <h1>Join our community!</h1>
 
-            <div className="form-group">
+            <div className="form-group" >
                 <label className="control-label">Username</label>
                <input 
                 value={this.state.username}
                 onChange={this.onChange}
                 type="text"
                 name="username"
-                className="form-control" />
+                className={classnames("form-control", { 'is-invalid': errors.username })} />
+            {errors.username && <span className="help-block">{errors.username}</span>} 
             </div>
 
             <div className="form-group">
@@ -50,7 +61,8 @@ class SignupForm extends React.Component {
                 onChange={this.onChange}
                 type="text"
                 name="email"
-                className="form-control" />
+                className={classnames("form-control", { 'is-invalid': errors.email })} />
+                {errors.email && <span className="help-block">{errors.email}</span>} 
              </div>
 
              <div className="form-group">
@@ -60,7 +72,8 @@ class SignupForm extends React.Component {
                 onChange={this.onChange}
                 type="password"
                 name="password"
-                className="form-control" />
+                className={classnames("form-control", { 'is-invalid': errors.password })} />
+                {errors.password && <span className="help-block">{errors.password}</span>} 
              </div>
 
              <div className="form-group">
@@ -70,7 +83,8 @@ class SignupForm extends React.Component {
                  onChange={this.onChange}
                  type="password"
                  name="passwordConfirmation"
-                 className="form-control" />
+                 className={classnames("form-control", { 'is-invalid': errors.passwordConfirmation })} />
+                 {errors.passwordConfirmation && <span className="help-block">{errors.passwordConfirmation}</span>} 
               </div>
 
               <div className="form-group">
@@ -79,13 +93,14 @@ class SignupForm extends React.Component {
                   value={this.state.timezone} 
                   onChange={this.onChange}
                   name="timezone"
-                  className="form-control" >
+                  className={classnames("form-control", { 'is-invalid': errors.timezone })} >
                         <option value="" disabled>Choose Your Timezone</option>
                         {options}
                   </select>
+                  {errors.timezone && <span className="help-block">{errors.timezone}</span>} 
                </div>
 
-            <button className="btn btn-primary btn-lg">Sign up</button>
+            <button disabled={this.state.isLoading} className="btn btn-primary btn-lg">Sign up</button>
         </form>
     );
 }

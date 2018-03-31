@@ -7,7 +7,7 @@ import NavigationBar from './NavigationBar';
 import LoginPage from './login/LoginPage';
 
 class App extends React.Component {
-
+//npm run server
     render (){
         return (
             <Router>
