@@ -18,7 +18,7 @@ onClick(){
        return (
             <div className={classnames('alert', {
                 'alert-success': type ==='success',
-                'slert-danger' : type === 'error'
+                'alert-danger' : type === 'error'
             })} >
                 <button onClick={this.onClick} className="close"><span>&times;</span></button>
                 { text }

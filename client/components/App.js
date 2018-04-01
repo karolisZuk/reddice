@@ -7,6 +7,7 @@ import NavigationBar from './NavigationBar';
 import LoginPage from './login/LoginPage';
 import NewEventPage from './events/NewEventPage';
 import FlashMessagesList from './flash/FlashMessagesList';
+import requireAuth from '../utils/requireAuth';
 
 class App extends React.Component {
     render (){
@@ -18,7 +19,7 @@ class App extends React.Component {
                   <Route exact path="/" component={Greetings} />
                   <Route path="/signup" component={SignupPage} />
                   <Route path="/login" component={LoginPage} />
-                  <Route path="/new-event" component={NewEventPage} />
+                  <Route path="/new-event" component={requireAuth(NewEventPage)} />
                 </div>
             </Router> );
     }
